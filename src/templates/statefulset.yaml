@@ -126,12 +126,12 @@ spec:
           valueFrom:
             secretKeyRef:
               name: harness-secrets
-              key: "timescaledbStandbyPasssword"
+              key: "timescaledbStandbyPassword"
         - name: PATRONI_REPLICATION_PASSWORD
           valueFrom:
             secretKeyRef:
               name: harness-secrets
-              key: timescaledbStandbyPasssword
+              key: timescaledbStandbyPassword
         - name: PATRONI_SUPERUSER_PASSWORD
           valueFrom:
             secretKeyRef:
