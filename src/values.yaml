@@ -1,0 +1,34 @@
+global:
+  storageClassName: ""
+  timescaledb:
+    adminPassword: ""
+    postgresPassword: ""
+    standbyPassword: ""
+
+timescaledb:
+    adminPassword: ""
+    postgresPassword: ""
+    standbyPassword: ""
+
+#timescaledb:
+image:
+  tag: pg13-ts2.6-oss-latest
+  repository: timescale/timescaledb-ha
+
+replicas: 1
+
+resources:
+  limits:
+    cpu: 1
+    memory: 2048Mi
+  requests:
+    cpu: 1
+    memory: 2048Mi
+storage:
+  capacity: 100Gi
+
+nodeSelector: {}
+
+affinity: {}
+
+tolerations: []

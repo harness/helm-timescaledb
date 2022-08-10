@@ -1,0 +1,75 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: timescaledb-single-chart-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: timescaledb-single-chart
+    chart: timescaledb-single-0.5.5
+    release: timescaledb-single-chart
+    heritage: Tiller
+    cluster-name: timescaledb-single-chart
+spec:
+  selector:
+    app: timescaledb-single-chart
+    cluster-name: timescaledb-single-chart
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: patroni
+    port: 8008
+    protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: timescaledb-single-chart-replica
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: timescaledb-single-chart
+    chart: timescaledb-single-0.5.5
+    release: timescaledb-single-chart
+    heritage: Tiller
+    cluster-name: timescaledb-single-chart
+    role: replica
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "4000"   
+spec:
+  selector:
+    app: timescaledb-single-chart
+    cluster-name: timescaledb-single-chart
+    role: replica
+  type: ClusterIP
+  ports:
+  - name: postgresql
+    # This always defaults to 5432, even if `!replicaLoadBalancer.enabled`.
+    port: 5432
+    protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: timescaledb-single-chart
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: timescaledb-single-chart
+    chart: timescaledb-single-0.5.5
+    release: timescaledb-single-chart
+    heritage: Tiller
+    cluster-name: timescaledb-single-chart
+    role: master
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "4000"    
+spec:
+  type: ClusterIP
+  ports:
+  - name: postgresql
+    # This always defaults to 5432, even if `!loadBalancer.enabled`.
+    port: 5432
+    targetPort: postgresql
+    protocol: TCP
