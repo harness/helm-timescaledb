@@ -3,16 +3,16 @@ entries:
   timescaledb:
   - apiVersion: v2
     appVersion: 0.0.1
-    created: "2022-08-11T04:01:54.286965+05:30"
+    created: "2022-08-11T10:34:27.822389-04:00"
     dependencies:
     - name: harness-common
       repository: https://harness.github.io/helm-common/charts
       version: 0.1.0
     description: A Helm chart for Kubernetes
-    digest: 64bca3491d37fe885b778fd53d829b0e8746212c202785e95ff181d55289909d
+    digest: b2632d6703484f8eadbd4514c7f38cfc1062f187e9a4b50d419cafffebcada9a
     name: timescaledb
     type: application
     urls:
     - timescaledb-0.1.0.tgz
     version: 0.1.0
-generated: "2022-08-11T04:01:54.285056+05:30"
+generated: "2022-08-11T10:34:27.820006-04:00"
