@@ -9,7 +9,7 @@ metadata:
     release: timescaledb-single-chart
     heritage: Tiller
   annotations:
-    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-2"
 rules:
 - apiGroups: [""]

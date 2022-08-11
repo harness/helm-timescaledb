@@ -11,7 +11,7 @@ metadata:
     heritage: Tiller
     cluster-name: timescaledb-single-chart
   annotations:
-    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-2"
 spec:
   selector:
@@ -40,7 +40,7 @@ metadata:
     role: replica
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "4000"
-    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-2"
 spec:
   selector:
@@ -70,7 +70,7 @@ metadata:
     role: master
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "4000"
-    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "-2"
 spec:
   type: ClusterIP
