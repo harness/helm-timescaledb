@@ -1,16 +1,6 @@
 global:
   storageClassName: ""
-  timescaledb:
-    adminPassword: ""
-    postgresPassword: ""
-    standbyPassword: ""
 
-timescaledb:
-    adminPassword: ""
-    postgresPassword: ""
-    standbyPassword: ""
-
-#timescaledb:
 image:
   tag: pg13-ts2.6-oss-latest
   repository: timescale/timescaledb-ha
