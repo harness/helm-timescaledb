@@ -45,7 +45,7 @@ spec:
       terminationGracePeriodSeconds: 600
       containers:
       - name: timescaledb
-        image: {{ .Values.image.repository}}:{{ .Values.image.tag}}
+        image: {{ include "harnesscommon.names.imagename" . }}
         securityContext:
           runAsUser: 1000
         imagePullPolicy: IfNotPresent
