@@ -2,8 +2,10 @@ global:
   storageClassName: ""
 
 image:
+  registry: docker.io
   tag: pg13-ts2.6-oss-latest
   repository: timescale/timescaledb-ha
+  digest: ""
 
 replicas: 1
 
