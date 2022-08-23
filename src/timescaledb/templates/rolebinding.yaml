@@ -8,9 +8,7 @@ metadata:
     chart: timescaledb-single-0.5.5
     release: timescaledb-single-chart
     heritage: Tiller
-  annotations:
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-2"
+  annotations: {}
 subjects:
   - kind: ServiceAccount
     name: harness-default
