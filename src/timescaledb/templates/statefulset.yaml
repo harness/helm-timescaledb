@@ -1,9 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  annotations:
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-2"
+  annotations: {}
   labels:
     app: timescaledb-single-chart
     chart: timescaledb-single-0.5.5
@@ -118,28 +116,28 @@ spec:
         - name: PATRONI_admin_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: harness-secrets
-              key: "timescaledbAdminPassword"
+              name: {{ .Values.patroniAdminPassword.name }}
+              key: {{ .Values.patroniAdminPassword.key }}
         - name: PATRONI_postgres_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: harness-secrets
-              key: "timescaledbPostgresPassword"
+              name: {{ .Values.patroniPostgresPassword.name }}
+              key: {{ .Values.patroniPostgresPassword.key }}
         - name: PATRONI_standby_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: harness-secrets
-              key: "timescaledbStandbyPassword"
+              name: {{ .Values.patroniStandbyPassword.name }}
+              key: {{ .Values.patroniStandbyPassword.key }}
         - name: PATRONI_REPLICATION_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: harness-secrets
-              key: timescaledbStandbyPassword
+              name: {{ .Values.patroniReplicationPassword.name }}
+              key: {{ .Values.patroniReplicationPassword.key }}
         - name: PATRONI_SUPERUSER_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: harness-secrets
-              key: timescaledbPostgresPassword
+              name: {{ .Values.patroniSuperuserPassword.name }}
+              key: {{ .Values.patroniSuperuserPassword.key }}
         - name: PATRONI_REPLICATION_USERNAME
           value: standby
         # To specify the PostgreSQL and Rest API connect addresses we need

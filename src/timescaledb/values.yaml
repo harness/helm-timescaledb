@@ -7,6 +7,26 @@ image:
   repository: timescale/timescaledb-ha
   digest: ""
 
+patroniAdminPassword:
+  name: harness-secrets
+  key: timescaledbAdminPassword
+
+patroniPostgresPassword:
+  name: harness-secrets
+  key: timescaledbPostgresPassword
+
+patroniStandbyPassword:
+  name: harness-secrets
+  key: timescaledbStandbyPassword
+
+patroniReplicationPassword:
+  name: harness-secrets
+  key: timescaledbStandbyPassword
+
+patroniSuperuserPassword:
+  name: harness-secrets
+  key: timescaledbPostgresPassword
+
 replicas: 1
 
 resources:

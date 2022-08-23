@@ -3,9 +3,7 @@ kind: ConfigMap
 metadata:
   name: timescaledb-init
   namespace: {{ .Release.Namespace }}
-  annotations:
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-2"
+  annotations: {}
 data:
   on_start: |
     #!/bin/bash
