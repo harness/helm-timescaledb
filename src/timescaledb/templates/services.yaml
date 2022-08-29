@@ -10,9 +10,7 @@ metadata:
     release: timescaledb-single-chart
     heritage: Tiller
     cluster-name: timescaledb-single-chart
-  annotations:
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-2"
+  annotations: {}
 spec:
   selector:
     app: timescaledb-single-chart
@@ -40,8 +38,6 @@ metadata:
     role: replica
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "4000"
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-2"
 spec:
   selector:
     app: timescaledb-single-chart
@@ -70,8 +66,6 @@ metadata:
     role: master
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "4000"
-    "helm.sh/hook": pre-install
-    "helm.sh/hook-weight": "-2"
 spec:
   type: ClusterIP
   ports:
