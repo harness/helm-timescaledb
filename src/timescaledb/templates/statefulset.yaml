@@ -12,7 +12,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   serviceName: timescaledb-single-chart
-  replicas: {{ .Values.replicas }}
+  replicas: {{ .Values.replicaCount }}
   updateStrategy:
     type: RollingUpdate
   selector:

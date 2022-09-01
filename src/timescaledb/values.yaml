@@ -27,7 +27,7 @@ patroniSuperuserPassword:
   name: harness-secrets
   key: timescaledbPostgresPassword
 
-replicas: 1
+replicaCount: 1
 
 resources:
   limits:
