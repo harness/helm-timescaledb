@@ -3,6 +3,11 @@ kind: ConfigMap
 metadata:
   name: timescaledb-init
   namespace: {{ .Release.Namespace }}
+  labels:
+    {{- if .Chart.AppVersion }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    {{- end }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
   annotations: {}
 data:
   on_start: |
@@ -26,9 +31,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: timescaledb-single-chart
-    chart: timescaledb-single-0.5.5
-    release: timescaledb-single-chart
-    heritage: Tiller
+    {{- if .Chart.AppVersion }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    {{- end }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
     cluster-name: timescaledb-single-chart
 data:
   patroni.yaml: |
@@ -132,9 +138,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: timescaledb-single-chart
-    chart: timescaledb-single-0.5.5
-    release: timescaledb-single-chart
-    heritage: Tiller
+    {{- if .Chart.AppVersion }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    {{- end }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
     cluster-name: timescaledb-single-chart
 data:
   # If no backup is configured, archive_command would normally fail. A failing archive_command on a cluster
