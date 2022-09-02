@@ -23,7 +23,7 @@ metadata:
 {{- end }}
 spec:
   selector:
-    app: {{ template "timescaledb.fullname" . }}
+    app: {{ template "clusterName" . }}
     cluster-name: {{ template "clusterName" . }}
     role: replica
 {{- if .Values.replicaLoadBalancer.enabled }}

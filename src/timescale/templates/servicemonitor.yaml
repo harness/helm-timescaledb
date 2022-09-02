@@ -27,7 +27,7 @@ spec:
   jobLabel: "{{ .Release.Name }}"
   selector:
     matchLabels:
-      app: {{ template "timescaledb.fullname" . }}
+      app: {{ template "clusterName" . }}
       release: "{{ .Release.Name }}"
       component: postgres-exporter
   {{- if .Values.serviceMonitor.targetLabels }}
