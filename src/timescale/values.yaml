@@ -281,8 +281,8 @@ postInit:
   # in sorted order only once: After a cluster initialization
   # Some examples:
   - configMap:
-      name: custom-init-scripts
-      optional: true
+      name: timescale-harness-post-init
+      optional: false
   - secret:
       name: custom-secret-scripts
       optional: true
