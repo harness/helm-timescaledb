@@ -79,6 +79,15 @@ entries:
     version: 0.2.0
   timescaledb-single:
   - apiVersion: v1
+    created: "2022-09-03T12:30:39.032606292Z"
+    description: TimescaleDB HA Deployment.
+    digest: 273781c3b564723870c76d7b17103b5f5f3e8d0b1fe48706c4e4b4b471b69ffa
+    home: https://github.com/hanress/helm-timescale
+    name: timescaledb-single
+    urls:
+    - https://github.com/harness/helm-timescaledb/releases/download/timescaledb-single-0.14.6/timescaledb-single-0.14.6.tgz
+    version: 0.14.6
+  - apiVersion: v1
     created: "2022-09-03T12:10:18.551826397Z"
     description: TimescaleDB HA Deployment.
     digest: c9f7464c7ec7e02deeab353a800778ec0aa4bcfb54ec7d144caa6ff2a3ddee49
@@ -96,4 +105,4 @@ entries:
     urls:
     - https://github.com/harness/helm-timescaledb/releases/download/timescaledb-single-0.14.4/timescaledb-single-0.14.4.tgz
     version: 0.14.4
-generated: "2022-09-03T12:10:18.551842797Z"
+generated: "2022-09-03T12:30:39.032630092Z"
