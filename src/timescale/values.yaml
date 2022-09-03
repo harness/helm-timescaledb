@@ -281,8 +281,8 @@ postInit:
   # in sorted order only once: After a cluster initialization
   # Some examples:
   - configMap:
-      name: custom-init-scripts
-      optional: true
+      name: timescale-harness-post-init
+      optional: false
   - secret:
       name: custom-secret-scripts
       optional: true
@@ -427,13 +427,13 @@ fullWalPrevention:
     readWriteFreePercent: 8
     readWriteFreeMB: 128
 
-resources:
-  limits:
-    cpu: "1"
-    memory: "2048Mi"
-  requests:
-    cpu: "1"
-    memory: "2048Mi"
+resources: {}
+#  limits:
+#    cpu: "1"
+#    memory: "2048Mi"
+#  requests:
+#    cpu: "1"
+#    memory: "2048Mi"
 
 sharedMemory:
   # By default Kubernetes only provides 64MB to /dev/shm

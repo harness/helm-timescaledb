@@ -21,7 +21,7 @@ spec:
       release: {{ .Release.Name }}
   template:
     metadata:
-      name: {{ template "clusterName" . }}
+      name: {{ template "timescaledb.fullname" . }}
       labels:
 {{ include "timescaledb-helm.labels" . | indent 8 }}
         app.kubernetes.io/component: timescaledb
@@ -43,7 +43,7 @@ spec:
       - name: tstune
         securityContext:
           allowPrivilegeEscalation: false
-        image: {{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         env:
         - name: TSTUNE_FILE
           value: {{ template "tstune_config" . }}
@@ -128,7 +128,7 @@ spec:
       - name: timescaledb
         securityContext:
           allowPrivilegeEscalation: false
-        image: {{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         lifecycle:
           preStop:
@@ -227,7 +227,7 @@ spec:
         - name: PATRONI_KUBERNETES_NAMESPACE
           value: {{ $.Release.Namespace }}
         - name: PATRONI_KUBERNETES_LABELS
-          value: {{ printf "{app: %s, cluster-name: %s, release: %s}" (include "timescaledb.fullname" .) (include "clusterName" .) .Release.Name  | quote }}
+          value: {{ printf "{app: %s, cluster-name: %s, release: %s}" (.Values.clusterName) (include "clusterName" .) .Release.Name  | quote }}
         - name: PATRONI_SCOPE
           value: {{ template "clusterName" . }}
         - name: PGBACKREST_CONFIG
@@ -355,7 +355,7 @@ spec:
             name: pgbouncer-userlist
             readOnly: true
 {{- end }}
-        image: {{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
           - containerPort: 6432
@@ -371,7 +371,7 @@ spec:
       - name: pgbackrest
         securityContext:
           allowPrivilegeEscalation: false
-        image: {{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command:
           - {{ template "scripts_dir" . }}/pgbackrest_bootstrap.sh
@@ -531,7 +531,7 @@ spec:
 {{ toYaml .Values.persistentVolumes.data.annotations | indent 10 }}
         {{- end }}
         labels:
-          app: {{ template "timescaledb.fullname" . }}
+          app: {{ template "clusterName" . }}
           release: {{ .Release.Name }}
           heritage: {{ .Release.Service }}
           cluster-name: {{ template "clusterName" . }}
@@ -558,7 +558,7 @@ spec:
 {{ toYaml .Values.persistentVolumes.wal.annotations | indent 10 }}
         {{- end }}
         labels:
-          app: {{ template "timescaledb.fullname" . }}
+          app: {{ template "clusterName" . }}
           release: {{ .Release.Name }}
           heritage: {{ .Release.Service }}
           cluster-name: {{ template "clusterName" . }}
@@ -583,7 +583,7 @@ spec:
         annotations:
 {{ $volume.annotations | default dict | toYaml | indent 10 }}
         labels:
-          app: {{ template "timescaledb.fullname" $ }}
+          app: {{ template "clusterName" $ }}
           release: {{ $.Release.Name }}
           heritage: {{ $.Release.Service }}
           cluster-name: {{ template "clusterName" $ }}

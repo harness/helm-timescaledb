@@ -118,7 +118,7 @@ ${HOME}/.pgbackrest_environment
 Generate common labels to be used
 */}}
 {{- define "timescaledb.labels" -}}
-app: {{ template "clusterName" . }}
+app: {{ include "clusterName" . }}
 chart: {{ template "timescaledb.chart" . }}
 release: {{ .Release.Name }}
 heritage: {{ .Release.Service }}

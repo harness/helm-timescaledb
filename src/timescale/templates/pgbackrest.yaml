@@ -16,7 +16,7 @@ spec:
   - port: 8081
     protocol: TCP
   selector:
-    app: {{ template "timescaledb.fullname" . }}
+    app: {{ template "clusterName" . }}
     role: master
     cluster-name: {{ template "clusterName" . }}
 ...
@@ -40,7 +40,7 @@ spec:
   jobTemplate:
     metadata:
       labels:
-        app: {{ template "timescaledb.fullname" $ }}
+        app: {{ template "clusterName" $ }}
         backup-type: {{ .type }}
         cluster-name: {{ template "clusterName" $ }}
     spec:
@@ -48,7 +48,7 @@ spec:
       template:
         metadata:
           labels:
-            app: {{ template "timescaledb.fullname" $ }}
+            app: {{ template "clusterName" $ }}
             backup-type: {{ .type }}
             cluster-name: {{ template "clusterName" $ }}
         spec:

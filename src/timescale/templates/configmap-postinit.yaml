@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: timescale-harness-post-init
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "timescaledb-helm.labels" . | indent 4 }}
+    app.kubernetes.io/component: scripts
+data:
+  ## initialize harness databases
+  on_start.sh: |
+    #!/bin/bash 
+    psql -d "$1" << __SQL__
+    CREATE DATABASE harness;
+    CREATE DATABASE harnessti;
+    __SQL__
