@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 description: TimescaleDB HA Deployment.
 home: https://github.com/hanress/helm-timescale
 name: timescaledb

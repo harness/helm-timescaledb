@@ -6,6 +6,12 @@ TimescaleDB HA Deployment.
 
 **Homepage:** <https://github.com/hanress/helm-timescale>
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://harness.github.io/helm-common | harness-common | 1.x.x |
+
 ## Values
 
 | Key | Type | Default | Description |
