@@ -1,1 +1,1 @@
-src/timescaledb/README.md
+src/timescale/README.md
