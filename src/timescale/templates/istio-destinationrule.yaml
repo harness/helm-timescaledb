@@ -1,7 +1,6 @@
 {{- if .Values.global }}
 {{- if .Values.global.istio }}
-{{- if .Values.global.istio.enabled }}
-{{- if .Values.global.istio.strict }}
+{{- if and .Values.global.istio.enabled .Values.global.istio.strict }}
 {{- $name := include "timescaledb.fullname" . }}
 {{- $count := int .Values.replicaCount }}
 {{- $namespace := .Release.Namespace -}}
@@ -44,7 +43,6 @@ spec:
     name: tcp-patroni
     protocol: TCP
   resolution: NONE
-{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
