@@ -21,6 +21,28 @@ spec:
       sni: {{ printf "%s.%s.dev.svc.cluster.local" $objName $namespace }}
 ---
 {{- end }}
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: {{ $name }}
+  namespace: {{ $namespace }}
+  labels:
+{{ include "timescaledb-helm.labels" $ | indent 4 }}
+spec:
+  hosts:
+{{- range $i, $e := until 4 }}
+{{- $objName := printf "%s-%d" $name $i }}
+  - {{ printf "%s.%s.dev.svc.cluster.local" $objName $namespace }}
+{{- end }}
+  location: MESH_INTERNAL
+  ports:
+  - number: 5432
+    name: tcp-postgres
+    protocol: TCP
+  - number: 8008
+    name: tcp-patroni
+    protocol: TCP
+  resolution: NONE
 {{- end }}
 {{- end }}
 {{- end }}
