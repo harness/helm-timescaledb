@@ -1,10 +1,10 @@
 {{- if .Values.global }}
 {{- if .Values.global.istio }}
-{{- if .Values.global.istio.enabled }}
-{{- if .Values.global.istio.strict }}
+{{- if and .Values.global.istio.enabled .Values.global.istio.strict }}
 {{- $name := include "timescaledb.fullname" . }}
+{{- $count := int .Values.replicaCount }}
 {{- $namespace := .Release.Namespace -}}
-{{- range $i, $e := until 4 }}
+{{- range $i, $e := until $count }}
 {{- $objName := printf "%s-%d" $name $i }}
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
@@ -30,7 +30,7 @@ metadata:
 {{ include "timescaledb-helm.labels" $ | indent 4 }}
 spec:
   hosts:
-{{- range $i, $e := until 4 }}
+{{- range $i, $e := until $count }}
 {{- $objName := printf "%s-%d" $name $i }}
   - {{ printf "%s.%s.dev.svc.cluster.local" $objName $namespace }}
 {{- end }}
@@ -43,7 +43,6 @@ spec:
     name: tcp-patroni
     protocol: TCP
   resolution: NONE
-{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
