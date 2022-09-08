@@ -1,0 +1,27 @@
+{{- if .Values.global }}
+{{- if .Values.global.istio }}
+{{- if .Values.global.istio.enabled }}
+{{- if .Values.global.istio.strict }}
+{{- $name := include "timescaledb.fullname" . }}
+{{- $namespace := .Release.Namespace -}}
+{{- range $i, $e := until 4 }}
+{{- $objName := printf "%s-%d" $name $i }}
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: {{ $objName }}
+  namespace: {{ $namespace  }}
+  labels:
+{{ include "timescaledb-helm.labels" $ | indent 4 }}
+spec:
+  host: {{ printf "%s.%s.dev.svc.cluster.local" $objName $namespace }}
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+      sni: {{ printf "%s.%s.dev.svc.cluster.local" $objName $namespace }}
+---
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
