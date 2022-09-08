@@ -2,6 +2,19 @@ apiVersion: v1
 entries:
   timescaledb:
   - apiVersion: v2
+    created: "2022-09-08T16:51:46.186565777Z"
+    dependencies:
+    - name: harness-common
+      repository: https://harness.github.io/helm-common
+      version: 1.x.x
+    description: TimescaleDB HA Deployment.
+    digest: 77c40b7f641f8fa9b786a65628245a38a2d2bb8dec086a4a72d1237c0b0721af
+    home: https://github.com/hanress/helm-timescale
+    name: timescaledb
+    urls:
+    - https://github.com/harness/helm-timescaledb/releases/download/timescaledb-0.2.6/timescaledb-0.2.6.tgz
+    version: 0.2.6
+  - apiVersion: v2
     created: "2022-09-07T12:27:50.18782499Z"
     dependencies:
     - name: harness-common
@@ -118,4 +131,4 @@ entries:
     urls:
     - https://github.com/harness/helm-timescaledb/releases/download/timescaledb-single-0.14.4/timescaledb-single-0.14.4.tgz
     version: 0.14.4
-generated: "2022-09-07T12:27:50.18786219Z"
+generated: "2022-09-08T16:51:46.186599777Z"
