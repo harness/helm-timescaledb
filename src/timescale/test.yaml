@@ -1,6 +1,0 @@
-fullnameOverride: "blah"
-
-global:
-  istio:
-    enabled: true
-    strict: true
