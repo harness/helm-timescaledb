@@ -2,7 +2,7 @@ apiVersion: v2
 description: TimescaleDB HA Deployment.
 home: https://github.com/hanress/helm-timescale
 name: timescaledb
-version: 0.2.8
+version: 0.2.9
 dependencies:
   - name: harness-common
     version: 1.x.x
