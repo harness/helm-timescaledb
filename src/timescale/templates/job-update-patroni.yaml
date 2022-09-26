@@ -21,9 +21,6 @@ metadata:
   labels:
 {{ include "timescaledb-helm.labels" . | indent 4}}
     app.kubernetes.io/component: patroni
-  annotations:
-    "helm.sh/hook": post-upgrade
-    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   activeDeadlineSeconds: 120
   template:
