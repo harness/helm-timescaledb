@@ -1,6 +1,6 @@
 # timescaledb
 
-![Version: 0.2.12](https://img.shields.io/badge/Version-0.2.12-informational?style=flat-square)
+![Version: 0.2.13](https://img.shields.io/badge/Version-0.2.13-informational?style=flat-square)
 
 TimescaleDB HA Deployment.
 
@@ -126,7 +126,7 @@ TimescaleDB HA Deployment.
 | patroni.postgresql.listen | string | `"0.0.0.0:5432"` |  |
 | patroni.postgresql.pg_hba[0] | string | `"local     all             postgres                              peer"` |  |
 | patroni.postgresql.pg_hba[1] | string | `"local     all             all                                   md5"` |  |
-| patroni.postgresql.pg_hba[2] | string | `"hostnossl all,replication all                all                reject"` |  |
+| patroni.postgresql.pg_hba[2] | string | `"hostnossl all,replication all                all                md5"` |  |
 | patroni.postgresql.pg_hba[3] | string | `"hostssl   all             all                127.0.0.1/32       md5"` |  |
 | patroni.postgresql.pg_hba[4] | string | `"hostssl   all             all                ::1/128            md5"` |  |
 | patroni.postgresql.pg_hba[5] | string | `"hostssl   replication     standby            all                md5"` |  |
