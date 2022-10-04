@@ -16,4 +16,9 @@ metadata:
 data:
   patroni.yaml: |
 {{ .Values.patroni | toYaml | indent 4 }}
+{{- if .Values.useCertificates }}
+          ssl: 'on'
+          ssl_cert_file: '/etc/certificate/tls.crt'
+          ssl_key_file: '/etc/certificate/tls.key'
+{{- end}}
 ...
