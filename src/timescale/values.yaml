@@ -216,9 +216,6 @@ patroni:
           max_connections: 100
           max_prepared_transactions: 150
           shared_preload_libraries: timescaledb,pg_stat_statements
-          ssl: 'on'
-          ssl_cert_file: '/etc/certificate/tls.crt'
-          ssl_key_file: '/etc/certificate/tls.key'
           tcp_keepalives_idle: 900
           tcp_keepalives_interval: 100
           temp_file_limit: 1GB

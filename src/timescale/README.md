@@ -1,6 +1,6 @@
 # timescaledb
 
-![Version: 0.2.11](https://img.shields.io/badge/Version-0.2.11-informational?style=flat-square)
+![Version: 0.2.12](https://img.shields.io/badge/Version-0.2.12-informational?style=flat-square)
 
 TimescaleDB HA Deployment.
 
@@ -94,9 +94,6 @@ TimescaleDB HA Deployment.
 | patroni.bootstrap.dcs.postgresql.parameters.max_connections | int | `100` |  |
 | patroni.bootstrap.dcs.postgresql.parameters.max_prepared_transactions | int | `150` |  |
 | patroni.bootstrap.dcs.postgresql.parameters.shared_preload_libraries | string | `"timescaledb,pg_stat_statements"` |  |
-| patroni.bootstrap.dcs.postgresql.parameters.ssl | string | `"on"` |  |
-| patroni.bootstrap.dcs.postgresql.parameters.ssl_cert_file | string | `"/etc/certificate/tls.crt"` |  |
-| patroni.bootstrap.dcs.postgresql.parameters.ssl_key_file | string | `"/etc/certificate/tls.key"` |  |
 | patroni.bootstrap.dcs.postgresql.parameters.tcp_keepalives_idle | int | `900` |  |
 | patroni.bootstrap.dcs.postgresql.parameters.tcp_keepalives_interval | int | `100` |  |
 | patroni.bootstrap.dcs.postgresql.parameters.temp_file_limit | string | `"1GB"` |  |
