@@ -49,6 +49,8 @@ secrets:
   # WARNING: Use this option with caution
   credentialsSecretName: "harness-secrets"
 
+  useCertificates: false
+
   # This map should contain tls key and certifiacte. When empty,
   # helm will generate self-signed certificate.
   certificate:

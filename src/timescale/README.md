@@ -1,6 +1,6 @@
 # timescaledb
 
-![Version: 0.2.9](https://img.shields.io/badge/Version-0.2.9-informational?style=flat-square)
+![Version: 0.2.10](https://img.shields.io/badge/Version-0.2.10-informational?style=flat-square)
 
 TimescaleDB HA Deployment.
 
@@ -207,6 +207,7 @@ TimescaleDB HA Deployment.
 | secrets.pgbackrest.PGBACKREST_REPO1_S3_KEY_SECRET | string | `""` |  |
 | secrets.pgbackrest.PGBACKREST_REPO1_S3_REGION | string | `""` |  |
 | secrets.pgbackrestSecretName | string | `""` |  |
+| secrets.useCertificates | bool | `false` |  |
 | service.primary.annotations | object | `{}` |  |
 | service.primary.labels | object | `{}` |  |
 | service.primary.nodePort | string | `nil` |  |
