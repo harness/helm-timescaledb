@@ -13,5 +13,5 @@ data:
     psql -d "$1" << __SQL__
     CREATE DATABASE harness;
     CREATE DATABASE harnessti;
-    CREATE DATABASE harness_gitops;
+    CREATE DATABASE "harness_gitops";
     __SQL__

@@ -1,6 +1,6 @@
 # timescaledb
 
-![Version: 0.2.14](https://img.shields.io/badge/Version-0.2.14-informational?style=flat-square)
+![Version: 0.2.15](https://img.shields.io/badge/Version-0.2.15-informational?style=flat-square)
 
 TimescaleDB HA Deployment.
 
