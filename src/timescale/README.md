@@ -1,6 +1,6 @@
 # timescaledb
 
-![Version: 0.2.16](https://img.shields.io/badge/Version-0.2.16-informational?style=flat-square)
+![Version: 0.2.17](https://img.shields.io/badge/Version-0.2.17-informational?style=flat-square)
 
 TimescaleDB HA Deployment.
 
@@ -138,6 +138,143 @@ TimescaleDB HA Deployment.
 | patroni.postgresql.recovery_conf.restore_command | string | `"/etc/timescaledb/scripts/pgbackrest_archive_get.sh %f \"%p\""` |  |
 | patroni.postgresql.use_unix_socket | bool | `true` |  |
 | patroni.restapi.listen | string | `"0.0.0.0:8008"` |  |
+| patroni_secure.bootstrap.dcs.loop_wait | int | `10` |  |
+| patroni_secure.bootstrap.dcs.maximum_lag_on_failover | int | `33554432` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters."timescaledb.passfile" | string | `"../.pgpass"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.archive_command | string | `"/etc/timescaledb/scripts/pgbackrest_archive.sh %p"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.archive_mode | string | `"on"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.archive_timeout | string | `"1800s"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.autovacuum_analyze_scale_factor | float | `0.02` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.autovacuum_max_workers | int | `10` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.autovacuum_naptime | string | `"5s"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.autovacuum_vacuum_cost_limit | int | `500` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.autovacuum_vacuum_scale_factor | float | `0.05` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.hot_standby | string | `"on"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.log_autovacuum_min_duration | string | `"1min"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.log_checkpoints | string | `"on"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.log_connections | string | `"on"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.log_disconnections | string | `"on"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.log_line_prefix | string | `"%t [%p]: [%c-%l] %u@%d,app=%a [%e] "` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.log_lock_waits | string | `"on"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.log_min_duration_statement | string | `"1s"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.log_statement | string | `"ddl"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.max_connections | int | `100` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.max_prepared_transactions | int | `150` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.shared_preload_libraries | string | `"timescaledb,pg_stat_statements"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.ssl | string | `"on"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.ssl_cert_file | string | `"/etc/certificate/tls.crt"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.ssl_key_file | string | `"/etc/certificate/tls.key"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.tcp_keepalives_idle | int | `900` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.tcp_keepalives_interval | int | `100` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.temp_file_limit | string | `"1GB"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.unix_socket_directories | string | `"/var/run/postgresql"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.unix_socket_permissions | string | `"0750"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.wal_level | string | `"hot_standby"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.parameters.wal_log_hints | string | `"on"` |  |
+| patroni_secure.bootstrap.dcs.postgresql.use_pg_rewind | bool | `true` |  |
+| patroni_secure.bootstrap.dcs.postgresql.use_slots | bool | `true` |  |
+| patroni_secure.bootstrap.dcs.retry_timeout | int | `10` |  |
+| patroni_secure.bootstrap.dcs.ttl | int | `30` |  |
+| patroni_secure.bootstrap.method | string | `"restore_or_initdb"` |  |
+| patroni_secure.bootstrap.post_init | string | `"/etc/timescaledb/scripts/post_init.sh"` |  |
+| patroni_secure.bootstrap.restore_or_initdb.command | string | `"/etc/timescaledb/scripts/restore_or_initdb.sh --encoding=UTF8 --locale=C.UTF-8\n"` |  |
+| patroni_secure.bootstrap.restore_or_initdb.keep_existing_recovery_conf | bool | `true` |  |
+| patroni_secure.kubernetes.role_label | string | `"role"` |  |
+| patroni_secure.kubernetes.scope_label | string | `"cluster-name"` |  |
+| patroni_secure.kubernetes.use_endpoints | bool | `true` |  |
+| patroni_secure.log.level | string | `"WARNING"` |  |
+| patroni_secure.postgresql.authentication.replication.username | string | `"standby"` |  |
+| patroni_secure.postgresql.authentication.superuser.username | string | `"postgres"` |  |
+| patroni_secure.postgresql.basebackup[0].waldir | string | `"/var/lib/postgresql/wal/pg_wal"` |  |
+| patroni_secure.postgresql.callbacks.on_reload | string | `"/etc/timescaledb/scripts/patroni_callback.sh"` |  |
+| patroni_secure.postgresql.callbacks.on_restart | string | `"/etc/timescaledb/scripts/patroni_callback.sh"` |  |
+| patroni_secure.postgresql.callbacks.on_role_change | string | `"/etc/timescaledb/scripts/patroni_callback.sh"` |  |
+| patroni_secure.postgresql.callbacks.on_start | string | `"/etc/timescaledb/scripts/patroni_callback.sh"` |  |
+| patroni_secure.postgresql.callbacks.on_stop | string | `"/etc/timescaledb/scripts/patroni_callback.sh"` |  |
+| patroni_secure.postgresql.create_replica_methods[0] | string | `"pgbackrest"` |  |
+| patroni_secure.postgresql.create_replica_methods[1] | string | `"basebackup"` |  |
+| patroni_secure.postgresql.listen | string | `"0.0.0.0:5432"` |  |
+| patroni_secure.postgresql.pg_hba[0] | string | `"local     all             postgres                              peer"` |  |
+| patroni_secure.postgresql.pg_hba[1] | string | `"local     all             all                                   md5"` |  |
+| patroni_secure.postgresql.pg_hba[2] | string | `"hostnossl all,replication all                all                md5"` |  |
+| patroni_secure.postgresql.pg_hba[3] | string | `"hostssl   all             all                127.0.0.1/32       md5"` |  |
+| patroni_secure.postgresql.pg_hba[4] | string | `"hostssl   all             all                ::1/128            md5"` |  |
+| patroni_secure.postgresql.pg_hba[5] | string | `"hostssl   replication     standby            all                md5"` |  |
+| patroni_secure.postgresql.pg_hba[6] | string | `"hostssl   all             all                all                md5"` |  |
+| patroni_secure.postgresql.pgbackrest.command | string | `"/etc/timescaledb/scripts/pgbackrest_restore.sh"` |  |
+| patroni_secure.postgresql.pgbackrest.keep_data | bool | `true` |  |
+| patroni_secure.postgresql.pgbackrest.no_master | bool | `true` |  |
+| patroni_secure.postgresql.pgbackrest.no_params | bool | `true` |  |
+| patroni_secure.postgresql.recovery_conf.restore_command | string | `"/etc/timescaledb/scripts/pgbackrest_archive_get.sh %f \"%p\""` |  |
+| patroni_secure.postgresql.use_unix_socket | bool | `true` |  |
+| patroni_secure.restapi.listen | string | `"0.0.0.0:8008"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.loop_wait | int | `10` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.maximum_lag_on_failover | int | `33554432` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters."timescaledb.passfile" | string | `"../.pgpass"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.archive_command | string | `"/etc/timescaledb/scripts/pgbackrest_archive.sh %p"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.archive_mode | string | `"on"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.archive_timeout | string | `"1800s"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.autovacuum_analyze_scale_factor | float | `0.02` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.autovacuum_max_workers | int | `10` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.autovacuum_naptime | string | `"5s"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.autovacuum_vacuum_cost_limit | int | `500` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.autovacuum_vacuum_scale_factor | float | `0.05` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.hot_standby | string | `"on"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.log_autovacuum_min_duration | string | `"1min"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.log_checkpoints | string | `"on"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.log_connections | string | `"on"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.log_disconnections | string | `"on"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.log_line_prefix | string | `"%t [%p]: [%c-%l] %u@%d,app=%a [%e] "` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.log_lock_waits | string | `"on"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.log_min_duration_statement | string | `"1s"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.log_statement | string | `"ddl"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.max_connections | int | `100` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.max_prepared_transactions | int | `150` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.shared_preload_libraries | string | `"timescaledb,pg_stat_statements"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.tcp_keepalives_idle | int | `900` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.tcp_keepalives_interval | int | `100` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.temp_file_limit | string | `"1GB"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.unix_socket_directories | string | `"/var/run/postgresql"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.unix_socket_permissions | string | `"0750"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.wal_level | string | `"hot_standby"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.parameters.wal_log_hints | string | `"on"` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.use_pg_rewind | bool | `true` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.postgresql.use_slots | bool | `true` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.retry_timeout | int | `10` |  |
+| patroni_secure.restapi.patroni.bootstrap.dcs.ttl | int | `30` |  |
+| patroni_secure.restapi.patroni.bootstrap.method | string | `"restore_or_initdb"` |  |
+| patroni_secure.restapi.patroni.bootstrap.post_init | string | `"/etc/timescaledb/scripts/post_init.sh"` |  |
+| patroni_secure.restapi.patroni.bootstrap.restore_or_initdb.command | string | `"/etc/timescaledb/scripts/restore_or_initdb.sh --encoding=UTF8 --locale=C.UTF-8\n"` |  |
+| patroni_secure.restapi.patroni.bootstrap.restore_or_initdb.keep_existing_recovery_conf | bool | `true` |  |
+| patroni_secure.restapi.patroni.kubernetes.role_label | string | `"role"` |  |
+| patroni_secure.restapi.patroni.kubernetes.scope_label | string | `"cluster-name"` |  |
+| patroni_secure.restapi.patroni.kubernetes.use_endpoints | bool | `true` |  |
+| patroni_secure.restapi.patroni.log.level | string | `"WARNING"` |  |
+| patroni_secure.restapi.patroni.postgresql.authentication.replication.username | string | `"standby"` |  |
+| patroni_secure.restapi.patroni.postgresql.authentication.superuser.username | string | `"postgres"` |  |
+| patroni_secure.restapi.patroni.postgresql.basebackup[0].waldir | string | `"/var/lib/postgresql/wal/pg_wal"` |  |
+| patroni_secure.restapi.patroni.postgresql.callbacks.on_reload | string | `"/etc/timescaledb/scripts/patroni_callback.sh"` |  |
+| patroni_secure.restapi.patroni.postgresql.callbacks.on_restart | string | `"/etc/timescaledb/scripts/patroni_callback.sh"` |  |
+| patroni_secure.restapi.patroni.postgresql.callbacks.on_role_change | string | `"/etc/timescaledb/scripts/patroni_callback.sh"` |  |
+| patroni_secure.restapi.patroni.postgresql.callbacks.on_start | string | `"/etc/timescaledb/scripts/patroni_callback.sh"` |  |
+| patroni_secure.restapi.patroni.postgresql.callbacks.on_stop | string | `"/etc/timescaledb/scripts/patroni_callback.sh"` |  |
+| patroni_secure.restapi.patroni.postgresql.create_replica_methods[0] | string | `"pgbackrest"` |  |
+| patroni_secure.restapi.patroni.postgresql.create_replica_methods[1] | string | `"basebackup"` |  |
+| patroni_secure.restapi.patroni.postgresql.listen | string | `"0.0.0.0:5432"` |  |
+| patroni_secure.restapi.patroni.postgresql.pg_hba[0] | string | `"local     all             postgres                              peer"` |  |
+| patroni_secure.restapi.patroni.postgresql.pg_hba[1] | string | `"local     all             all                                   md5"` |  |
+| patroni_secure.restapi.patroni.postgresql.pg_hba[2] | string | `"hostnossl all,replication all                all                md5"` |  |
+| patroni_secure.restapi.patroni.postgresql.pg_hba[3] | string | `"hostssl   all             all                127.0.0.1/32       md5"` |  |
+| patroni_secure.restapi.patroni.postgresql.pg_hba[4] | string | `"hostssl   all             all                ::1/128            md5"` |  |
+| patroni_secure.restapi.patroni.postgresql.pg_hba[5] | string | `"hostssl   replication     standby            all                md5"` |  |
+| patroni_secure.restapi.patroni.postgresql.pg_hba[6] | string | `"hostssl   all             all                all                md5"` |  |
+| patroni_secure.restapi.patroni.postgresql.pgbackrest.command | string | `"/etc/timescaledb/scripts/pgbackrest_restore.sh"` |  |
+| patroni_secure.restapi.patroni.postgresql.pgbackrest.keep_data | bool | `true` |  |
+| patroni_secure.restapi.patroni.postgresql.pgbackrest.no_master | bool | `true` |  |
+| patroni_secure.restapi.patroni.postgresql.pgbackrest.no_params | bool | `true` |  |
+| patroni_secure.restapi.patroni.postgresql.recovery_conf.restore_command | string | `"/etc/timescaledb/scripts/pgbackrest_archive_get.sh %f \"%p\""` |  |
+| patroni_secure.restapi.patroni.postgresql.use_unix_socket | bool | `true` |  |
+| patroni_secure.restapi.patroni.restapi.listen | string | `"0.0.0.0:8008"` |  |
 | persistentVolumes.data.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | persistentVolumes.data.annotations | object | `{}` |  |
 | persistentVolumes.data.enabled | bool | `true` |  |
@@ -229,5 +366,3 @@ TimescaleDB HA Deployment.
 | tolerations | list | `[]` |  |
 | version | string | `nil` |  |
 
-----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

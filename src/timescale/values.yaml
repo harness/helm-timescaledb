@@ -269,6 +269,219 @@ patroni:
   restapi:
     listen: 0.0.0.0:8008
 
+patroni_secure:
+  log:
+    level: WARNING
+  # https://patroni.readthedocs.io/en/latest/replica_bootstrap.html#bootstrap
+  bootstrap:
+    method: restore_or_initdb
+    restore_or_initdb:
+      command: >
+        /etc/timescaledb/scripts/restore_or_initdb.sh
+        --encoding=UTF8
+        --locale=C.UTF-8
+      keep_existing_recovery_conf: true
+    post_init: /etc/timescaledb/scripts/post_init.sh
+    dcs:
+      loop_wait: 10
+      maximum_lag_on_failover: 33554432
+      postgresql:
+        parameters:
+          archive_command: "/etc/timescaledb/scripts/pgbackrest_archive.sh %p"
+          archive_mode: 'on'
+          archive_timeout: 1800s
+          #
+          # Autovacuuming is very important to PostgreSQL. For TimescaleDB, in
+          # most usecases the vacuuming part is of less importance (there are no deleted tuples to prune)
+          # however, the autoanalyze bit (updating the statistics of the chunks) is important to help
+          # in planning queries. Therefore we do some tuning of autovacuum to address these
+          # TimescaleDB specific concerns.
+          # We'd rather have autovacuum do things early, as this increases the changes that autovacuum
+          # will find the buffers it needs in shared_buffers, instead of having to fetch them from disk.
+          #
+          autovacuum_analyze_scale_factor: 0.02
+          # This allows us to auto-analyze at most 120 (pretty much empty) chunks every 5 seconds
+          # This will ensure that we can have up-to-date statistics on inserts very, very quickly
+          autovacuum_naptime: 5s
+          autovacuum_max_workers: 10
+          # We don't want vacuum work to be building up, therefore we increase
+          # the cost limit so that the work to be done for vacuum will be done quickly.
+          autovacuum_vacuum_cost_limit: 500
+          autovacuum_vacuum_scale_factor: 0.05
+          log_autovacuum_min_duration: 1min
+          hot_standby: 'on'
+          log_checkpoints: 'on'
+          log_connections: 'on'
+          log_disconnections: 'on'
+          log_line_prefix: "%t [%p]: [%c-%l] %u@%d,app=%a [%e] "
+          log_lock_waits: 'on'
+          log_min_duration_statement: '1s'
+          log_statement: ddl
+          max_connections: 100
+          max_prepared_transactions: 150
+          shared_preload_libraries: timescaledb,pg_stat_statements
+          tcp_keepalives_idle: 900
+          tcp_keepalives_interval: 100
+          temp_file_limit: 1GB
+          timescaledb.passfile: '../.pgpass'
+          unix_socket_directories: "/var/run/postgresql"
+          unix_socket_permissions: '0750'
+          wal_level: hot_standby
+          wal_log_hints: 'on'
+          ssl: 'on'
+          ssl_cert_file: '/etc/certificate/tls.crt'
+          ssl_key_file: '/etc/certificate/tls.key'
+        use_pg_rewind: true
+        use_slots: true
+      retry_timeout: 10
+      ttl: 30
+  kubernetes:
+    role_label: role
+    scope_label: cluster-name
+    use_endpoints: true
+  postgresql:
+    create_replica_methods:
+    - pgbackrest
+    - basebackup
+    pgbackrest:
+      command: /etc/timescaledb/scripts/pgbackrest_restore.sh
+      keep_data: true
+      no_params: true
+      no_master: true
+    basebackup:
+    - waldir: "/var/lib/postgresql/wal/pg_wal"
+    recovery_conf:
+      restore_command: /etc/timescaledb/scripts/pgbackrest_archive_get.sh %f "%p"
+    callbacks:
+      on_role_change: /etc/timescaledb/scripts/patroni_callback.sh
+      on_start: /etc/timescaledb/scripts/patroni_callback.sh
+      on_reload: /etc/timescaledb/scripts/patroni_callback.sh
+      on_restart: /etc/timescaledb/scripts/patroni_callback.sh
+      on_stop: /etc/timescaledb/scripts/patroni_callback.sh
+    authentication:
+      replication:
+        username: standby
+      superuser:
+        username: postgres
+    listen: 0.0.0.0:5432
+    pg_hba:
+    - local     all             postgres                              peer
+    - local     all             all                                   md5
+    - hostnossl all,replication all                all                md5
+    - hostssl   all             all                127.0.0.1/32       md5
+    - hostssl   all             all                ::1/128            md5
+    - hostssl   replication     standby            all                md5
+    - hostssl   all             all                all                md5
+    use_unix_socket: true
+  restapi:
+    listen: 0.0.0.0:8008
+
+
+    patroni:
+      log:
+        level: WARNING
+      # https://patroni.readthedocs.io/en/latest/replica_bootstrap.html#bootstrap
+      bootstrap:
+        method: restore_or_initdb
+        restore_or_initdb:
+          command: >
+            /etc/timescaledb/scripts/restore_or_initdb.sh
+            --encoding=UTF8
+            --locale=C.UTF-8
+          keep_existing_recovery_conf: true
+        post_init: /etc/timescaledb/scripts/post_init.sh
+        dcs:
+          loop_wait: 10
+          maximum_lag_on_failover: 33554432
+          postgresql:
+            parameters:
+              archive_command: "/etc/timescaledb/scripts/pgbackrest_archive.sh %p"
+              archive_mode: 'on'
+              archive_timeout: 1800s
+              #
+              # Autovacuuming is very important to PostgreSQL. For TimescaleDB, in
+              # most usecases the vacuuming part is of less importance (there are no deleted tuples to prune)
+              # however, the autoanalyze bit (updating the statistics of the chunks) is important to help
+              # in planning queries. Therefore we do some tuning of autovacuum to address these
+              # TimescaleDB specific concerns.
+              # We'd rather have autovacuum do things early, as this increases the changes that autovacuum
+              # will find the buffers it needs in shared_buffers, instead of having to fetch them from disk.
+              #
+              autovacuum_analyze_scale_factor: 0.02
+              # This allows us to auto-analyze at most 120 (pretty much empty) chunks every 5 seconds
+              # This will ensure that we can have up-to-date statistics on inserts very, very quickly
+              autovacuum_naptime: 5s
+              autovacuum_max_workers: 10
+              # We don't want vacuum work to be building up, therefore we increase
+              # the cost limit so that the work to be done for vacuum will be done quickly.
+              autovacuum_vacuum_cost_limit: 500
+              autovacuum_vacuum_scale_factor: 0.05
+              log_autovacuum_min_duration: 1min
+              hot_standby: 'on'
+              log_checkpoints: 'on'
+              log_connections: 'on'
+              log_disconnections: 'on'
+              log_line_prefix: "%t [%p]: [%c-%l] %u@%d,app=%a [%e] "
+              log_lock_waits: 'on'
+              log_min_duration_statement: '1s'
+              log_statement: ddl
+              max_connections: 100
+              max_prepared_transactions: 150
+              shared_preload_libraries: timescaledb,pg_stat_statements
+              tcp_keepalives_idle: 900
+              tcp_keepalives_interval: 100
+              temp_file_limit: 1GB
+              timescaledb.passfile: '../.pgpass'
+              unix_socket_directories: "/var/run/postgresql"
+              unix_socket_permissions: '0750'
+              wal_level: hot_standby
+              wal_log_hints: 'on'
+            use_pg_rewind: true
+            use_slots: true
+          retry_timeout: 10
+          ttl: 30
+      kubernetes:
+        role_label: role
+        scope_label: cluster-name
+        use_endpoints: true
+      postgresql:
+        create_replica_methods:
+        - pgbackrest
+        - basebackup
+        pgbackrest:
+          command: /etc/timescaledb/scripts/pgbackrest_restore.sh
+          keep_data: true
+          no_params: true
+          no_master: true
+        basebackup:
+        - waldir: "/var/lib/postgresql/wal/pg_wal"
+        recovery_conf:
+          restore_command: /etc/timescaledb/scripts/pgbackrest_archive_get.sh %f "%p"
+        callbacks:
+          on_role_change: /etc/timescaledb/scripts/patroni_callback.sh
+          on_start: /etc/timescaledb/scripts/patroni_callback.sh
+          on_reload: /etc/timescaledb/scripts/patroni_callback.sh
+          on_restart: /etc/timescaledb/scripts/patroni_callback.sh
+          on_stop: /etc/timescaledb/scripts/patroni_callback.sh
+        authentication:
+          replication:
+            username: standby
+          superuser:
+            username: postgres
+        listen: 0.0.0.0:5432
+        pg_hba:
+        - local     all             postgres                              peer
+        - local     all             all                                   md5
+        - hostnossl all,replication all                all                md5
+        - hostssl   all             all                127.0.0.1/32       md5
+        - hostssl   all             all                ::1/128            md5
+        - hostssl   replication     standby            all                md5
+        - hostssl   all             all                all                md5
+        use_unix_socket: true
+      restapi:
+        listen: 0.0.0.0:8008
+
+
 callbacks:
   # If set, this configMap will be used for the Patroni callbacks.
   configMap:  # example-patroni-callbacks
