@@ -567,13 +567,7 @@ spec:
         resources:
           requests:
             storage: "{{ .Values.persistentVolumes.wal.size }}"
-      {{- if .Values.persistentVolumes.wal.storageClass }}
-      {{- if (eq "-" .Values.persistentVolumes.wal.storageClass) }}
-        storageClassName: ""
-      {{- else }}
-        storageClassName: "{{ .Values.persistentVolumes.wal.storageClass }}"
-      {{- end }}
-      {{- end }}
+        storageClassName: {{ .Values.persistentVolumes.wal.storageClass | default .Values.global.storageClass }}
   {{- end }}
 {{- range $tablespaceName, $volume := ($.Values.persistentVolumes.tablespaces | default dict ) }}
     - metadata:
