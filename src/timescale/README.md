@@ -57,6 +57,7 @@ TimescaleDB HA Deployment.
 | fullWalPrevention.thresholds.readOnlyFreePercent | int | `5` |  |
 | fullWalPrevention.thresholds.readWriteFreeMB | int | `128` |  |
 | fullWalPrevention.thresholds.readWriteFreePercent | int | `8` |  |
+| global.storageClass | string | `""` |  |
 | image.digest | string | `""` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.registry | string | `"docker.io"` |  |
