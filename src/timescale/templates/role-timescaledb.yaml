@@ -47,7 +47,7 @@ rules:
 - apiGroups: [""]
   resources: ["services"]
   verbs:
-#  - create
+  - create
   - get
   - list
 #  - patch
