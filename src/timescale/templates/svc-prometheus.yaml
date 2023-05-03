@@ -20,5 +20,5 @@ spec:
     - name: metrics
       port: 9187
   selector:
-    app: {{ template "timescaledb.fullname" . }}
+    app: {{ template "clusterName" . }}
 {{ end }}
