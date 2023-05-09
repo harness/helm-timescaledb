@@ -30,6 +30,7 @@ spec:
 {{ toYaml .Values.podAnnotations | indent 8 }}
 {{- end }}
     spec:
+    {{- include "timescaledb.pullSecrets" . | nindent 6 }}
       serviceAccountName: {{ template "timescaledb.serviceAccountName" . }}
       securityContext:
         # The postgres user inside the TimescaleDB image has uid=1000.

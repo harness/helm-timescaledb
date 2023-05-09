@@ -130,3 +130,13 @@ cluster-name: {{ template "clusterName" . }}
 app.kubernetes.io/name: {{ include "timescaledb.fullname" . | quote }}
 app.kubernetes.io/version: {{ .Chart.Version }}
 {{- end }}
+
+{{- define "timescaledb.pullSecrets" -}}
+{{ include "common.images.pullSecrets" (dict "images" (list .Values.image ) "global" .Values.global ) }}
+{{- end -}}
+
+
+
+{{- define "timescaledb.jobPullSecrets" -}}
+{{ include "common.images.pullSecrets" (dict "images" (list .Values.curlImage ) "global" .Values.global ) }}
+{{- end -}}
