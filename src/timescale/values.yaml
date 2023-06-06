@@ -9,12 +9,12 @@ replicaCount: 3
 
 # To prevent very long names, we override the name, otherwise it would default to
 # timescaledb-single (the name of the chart)
-nameOverride: timescaledb
+nameOverride: postgres
 
 # The default Patroni name of the cluster ("scope") is derived from the name of the release,
 # but you can override this behaviour here
 # https://patroni.readthedocs.io/en/latest/SETTINGS.html#global-universal
-clusterName: timescaledb-single-chart
+clusterName: postgres
 
 # The major PostgreSQL version to use, defaults to the default version of the Docker image
 # However, in pg_upgrade scenarios, you may need to specify an explicit version
@@ -25,7 +25,7 @@ image:
   # https://github.com/timescale/timescaledb-docker-ha
   registry: docker.io
   repository: timescale/timescaledb-ha
-  tag: pg13-ts2.6-oss-latest
+  tag: pg13-ts2.9-oss-latest
   pullPolicy: Always
   digest: ""
   imagePullSecrets: []
@@ -459,7 +459,7 @@ sharedMemory:
 # Any PostgreSQL parameter that is explicitly set in the Patroni configuration will override
 # the auto-tuned variables.
 timescaledbTune:
-  enabled: true
+  enabled: false
   # For full flexibility, we allow you to override any timescaledb-tune parameter below.
   # However, these parameters only take effect on newly scheduled pods and their settings are
   # only visibible inside those new pods.

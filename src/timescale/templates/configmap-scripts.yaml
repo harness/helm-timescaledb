@@ -307,18 +307,6 @@ data:
         echo "$(date '+%Y-%m-%d %H:%M:%S') - post_init - $1"
     }
 
-    log "Creating extension TimescaleDB in template1 and postgres databases"
-    psql -d "$URL" <<__SQL__
-      \connect template1
-      -- As we're still only initializing, we cannot have synchronous_commit enabled just yet.
-      SET synchronous_commit to 'off';
-      CREATE EXTENSION timescaledb;
-
-      \connect postgres
-      SET synchronous_commit to 'off';
-      CREATE EXTENSION timescaledb;
-    __SQL__
-
     TABLESPACES={{ $.Values.persistentVolumes.tablespaces | default dict | keys | join " " | quote }}
     for tablespace in $TABLESPACES
     do
