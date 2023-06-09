@@ -32,7 +32,7 @@ image:
 curlImage:
   registry: docker.io
   repository: curlimages/curl
-  tag: "latest"
+  tag: "8.1.2"
   pullPolicy: Always
   digest: ""
   imagePullSecrets: []
